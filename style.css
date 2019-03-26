@@ -1,0 +1,64 @@
+  body {
+    margin: 0 2em;
+  }
+
+  body:not(nav ul li),
+  input[type="submit"] {
+    font-size: 1.5em;
+  }
+
+  nav {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  nav ul li {
+    list-style: none;
+    display: inline;
+    padding: 1em;
+    background-color: teal;
+    color: aliceblue;
+    text-align: center;
+    font-size: 1.25em;
+    line-height: 1.25em;
+  }
+
+  nav ul li:hover{
+    background-color: turquoise;
+    color: aliceblue;
+    text-align: center;
+  }
+
+  nav ul li a {
+    text-decoration: none;
+  }
+
+  nav ul li a:visited {
+    color: aliceblue;
+  }
+
+  input[type="submit"] {
+    background-color: teal;
+    color: aliceblue;
+    width: 150px;
+    font-size: 1.5em;
+    margin-top: .5em
+  }
+
+  form {
+    margin-top: 1em;
+  }
+
+  input[type="text"] {
+    width: 400px;
+    line-height: 2em;
+    padding-left: 1em;
+  }
+
+  input {
+    font-size: 1.25em;
+  }
+
+  
+  
