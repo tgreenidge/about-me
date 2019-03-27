@@ -4,6 +4,7 @@
   <head>
     <title>About Me</title>
     <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
 
   <body>
@@ -49,9 +50,9 @@
       <h3>So you think you know me huh?</h3>
       Let's play a game! See if you can answer some questions about me correctly. 
 
-      <form action="submit">
-        <input type="text" name="name" placeholder="Please enter your name below to start"><br>
-        <input type="submit" value="Submit" onclick="startQuiz()">
+      <form id="getUsername">
+        <input id="username" type="text" name="name"  placeholder="Please enter your name to start"><br>
+        <input type="submit" value="Submit" onclick="startQuiz(event)">
       </form>
 
       <div class="questions">
