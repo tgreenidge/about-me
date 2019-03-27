@@ -7,10 +7,9 @@
     font-size: 1.5em;
   }
 
-  nav {
-    width: 50%;
-    margin-left: auto;
-    margin-right: auto;
+  nav, 
+  footer {
+    text-align: center;
   }
 
   nav ul li {
@@ -27,7 +26,6 @@
   nav ul li:hover{
     background-color: turquoise;
     color: aliceblue;
-    text-align: center;
   }
 
   nav ul li a {
@@ -46,7 +44,7 @@
     margin-top: .5em
   }
 
-  input[type="submit"] {
+  input[type="submit"]:hover {
     background-color: turquoise;
   }
 
@@ -64,5 +62,34 @@
     font-size: 1.25em;
   }
 
+  .fa-check-circle {
+    color: mediumvioletred;
+  }
+
+  .fa-times-circle {
+    color: teal;
+  }
+
   
+  @media only screen and (max-width: 900px) {
+    nav ul li {
+      font-size: .8125em;
+      line-height: .8125em;
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    nav ul li {
+      font-size: .65em;
+      line-height: .65em;
+    }
+  }
+
+  @media only screen and (max-width: 400px) {
+    nav ul li {
+      margin-left:0;
+      font-size: .3em;
+      line-height: .3em;
+    }
+  }
   
