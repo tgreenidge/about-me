@@ -62,14 +62,23 @@
     font-size: 1.25em;
   }
 
-  .fa-check-circle {
-    color: mediumvioletred;
-  }
-
-  .fa-times-circle {
+  .fa-check-circle,
+  .correct {
     color: teal;
   }
 
+  .fa-times-circle,
+  .incorrect {
+    color: mediumvioletred;
+  }
+
+  #num-correct {
+    text-align: center;
+    color: aliceblue;
+    background-color: teal;
+    font-size: 2em;
+    width: 20%;
+  }
   
   @media only screen and (max-width: 900px) {
     nav ul li {
