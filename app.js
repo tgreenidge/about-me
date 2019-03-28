@@ -22,6 +22,39 @@ var getARandomNumber = function(num) {
   return Math.floor(Math.random() * num) + 1;
 };
 
+//function for guess a number game. returns number of correct answers from guessANumberGame.
+var guessANumberGame = function(userName, numCorrect, questionsAnswered, guessANumberAnswers, guessANumberExplanations, guessANumberQuestions){
+
+  //TODO refactor below a function for guessing game and include in a form
+  var userGuess = prompt('Hello ' + userName + '. You have 3 guesses. ' + guessANumberQuestions[0]);
+
+  while (isNaN(parseInt(userGuess))) {
+    userGuess = prompt('Please enter a NUMBER. ' + guessANumberQuestions[0]);
+  }
+
+  var numGuessesRemaining = 3;
+
+  while (numGuessesRemaining > 0 ) {
+    var answer = guessANumberAnswers[0];
+    if (parseInt(userGuess) === answer){
+      //alert (correctResponseMessage);
+      alert ('You are correct');
+      numCorrect += 1;
+      break;
+    } else if (userGuess <= answer) {
+      userGuess = prompt('Too low, guess again. ' + guessANumberQuestions[0]);
+    } else {
+      userGuess = prompt('Too High, guess again. ' + guessANumberQuestions[0]);
+    }
+    numGuessesRemaining -= 1;
+  }
+  alert(guessANumberExplanations[0] + answer);
+  //check to see if updates properly
+  console.log(questionsAnswered);
+  questionsAnswered += 1;
+  return [numCorrect, questionsAnswered];
+};
+
 //startQuiz is called in the HTML doc
 var startQuiz = function(event){
   event.preventDefault();
@@ -149,42 +182,21 @@ var startQuiz = function(event){
         }
       });
     }
-
-    //TODO refactor below a function for guessing game and include in a form
-    var userGuess = prompt('Hello ' + userName + '. You have 3 guesses. ' + guessANumberQuestions[0]);
-
-    while (isNaN(parseInt(userGuess))) {
-      userGuess = prompt('Please enter a NUMBER. ' + guessANumberQuestions[0]);
-    }
-
-    var numGuessesRemaining = 3;
-
-    while (numGuessesRemaining > 0 ) {
-      var answer = guessANumberAnswers[0];
-      if (parseInt(userGuess) === answer){
-        alert (correctResponseMessage);
-        numCorrect += 1;
-        break;
-      } else if (userGuess <= answer) {
-        userGuess = prompt('Too low, guess again. ' + guessANumberQuestions[0]);
-      } else {
-        userGuess = prompt('Too High, guess again. ' + guessANumberQuestions[0]);
-      }
-      numGuessesRemaining -= 1;
-    }
-    alert(guessANumberExplanations[0] + answer);
-    updateScore(numCorrect, + yesAndNoQuestions.length + guessANumberQuestions.length + 1);
-    questionsAnswered += 1;
-    //check to see if updates properly
+    
+    //play guess a number game and get number of correct answer and number of questions answered.
+    var guessANumResults =  guessANumberGame(userName, numCorrect, questionsAnswered, guessANumberAnswers, guessANumberExplanations, guessANumberQuestions);
+    console.log(guessANumResults);
+    numCorrect += guessANumResults[0];
+    questionsAnswered += guessANumResults[1];
     console.log(questionsAnswered);
-
+    
     //TODO refactor below to include on form
     var placesLivedNames = ['MISSISSIPPI', 'RHODE ISLAND','TEXAS'];
     var placesLived2Chars = ['MI', 'RI', 'TX'];
     var lastQuestion = 'Hello ' + userName + '. You have 6 guesses. ' + 'Can you guess a state that I lived in other than New York and Washington?';
     var userGuessForPlace = prompt(lastQuestion).toUpperCase().trim();
 
-    numGuessesRemaining = 5;
+    var numGuessesRemaining = 5;
 
     while (numGuessesRemaining > 0 ) {
       if (placesLivedNames.includes(userGuessForPlace) || placesLived2Chars.includes(userGuessForPlace)){
