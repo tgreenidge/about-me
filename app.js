@@ -5,6 +5,18 @@ var updateScore = function(numCorrect, numQuestions){
   document.getElementById('num-correct').innerHTML = '<span><strong ></strong></span>' + numCorrect + ' / ' + numQuestions + ' Correct';
 };
 
+//displays updated final score
+var updateFinalScore = function(numCorrect, numQuestions, name){
+  console.log('updating final score...');
+  var scoreInfo = '<span><strong ></strong></span>' + numCorrect + ' / ' + numQuestions + ' Correct, ';
+
+  if (numCorrect === numQuestions) {
+    document.getElementById('num-correct').innerHTML = ('You got ' + scoreInfo + name + '. You seem to know me very well!');
+  } else {
+    document.getElementById('num-correct').innerHTML = ('You got ' + scoreInfo + name + '. Better luck next time!');
+  }
+};
+
 //returns  randon number between 0 and value, num, entered
 var getARandomNumber = function(num) {
   return Math.floor(Math.random() * num) + 1;
@@ -27,6 +39,10 @@ var startQuiz = function(event){
 
     //number of correct answers
     var numCorrect = 0;
+
+    //will be used as flag to update final store
+    //TODO refactor when refactoring extra questions
+    var questionsAnswered = 0;
 
     //set up questions, answers, and explanations for yes/no section of quiz
     var yesAndNoQuestions = [
@@ -118,6 +134,12 @@ var startQuiz = function(event){
               //display message for notification of incorrect response
               questionDivs[questionNumber].innerHTML += '    ' + incorrectResponseIcon + '<span class="incorrect">' + incorrectResponseMessage + yesAndNoExplanations[questionNumber] + '</span>';
             }
+            questionsAnswered += 1;
+
+            //TODO refactor so not hardcoded
+            if(questionsAnswered === 7) {
+              updateFinalScore(numCorrect, yesAndNoQuestions.length + guessANumberQuestions.length + 1, userName);
+            }
           } else {
             console.log('Invalid response entered - try again');
             //reset this input field
@@ -127,7 +149,8 @@ var startQuiz = function(event){
         }
       });
     }
-    //TODO refactor below a function for guessing game
+
+    //TODO refactor below a function for guessing game and include in a form
     var userGuess = prompt('Hello ' + userName + '. You have 3 guesses. ' + guessANumberQuestions[0]);
 
     while (isNaN(parseInt(userGuess))) {
@@ -151,6 +174,9 @@ var startQuiz = function(event){
     }
     alert(guessANumberExplanations[0] + answer);
     updateScore(numCorrect, + yesAndNoQuestions.length + guessANumberQuestions.length + 1);
+    questionsAnswered += 1;
+    //check to see if updates properly
+    console.log(questionsAnswered);
 
     //TODO refactor below to include on form
     var placesLivedNames = ['MISSISSIPPI', 'RHODE ISLAND','TEXAS'];
@@ -166,12 +192,13 @@ var startQuiz = function(event){
         numCorrect += 1;
         break;
       } else {
-        userGuessForPlace = prompt(lastQuestion).toUpperCase().trim();
+        userGuessForPlace = prompt(lastQuestion).toUpperCase().trim;
       }
       numGuessesRemaining -= 1;
     }
     alert('Other states that I lived are ' + placesLivedNames.join(', ') +'.');
     updateScore(numCorrect, + yesAndNoQuestions.length + guessANumberQuestions.length + 1);
+    questionsAnswered += 1;
   }
 };
 
