@@ -156,7 +156,7 @@ var startQuiz = function(event){
     var placesLivedNames = ['MISSISSIPPI', 'RHODE ISLAND','TEXAS'];
     var placesLived2Chars = ['MI', 'RI', 'TX'];
     var lastQuestion = 'Hello ' + userName + '. You have 6 guesses. ' + 'Can you guess a state that I lived in other than New York and Washington?';
-    var userGuessForPlace = prompt(lastQuestion).toUpperCase();
+    var userGuessForPlace = prompt(lastQuestion).toUpperCase().trim();
 
     numGuessesRemaining = 5;
 
@@ -166,7 +166,7 @@ var startQuiz = function(event){
         numCorrect += 1;
         break;
       } else {
-        userGuessForPlace = prompt(lastQuestion).toUpperCase();
+        userGuessForPlace = prompt(lastQuestion).toUpperCase().trim();
       }
       numGuessesRemaining -= 1;
     }
