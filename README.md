@@ -6,3 +6,6 @@ An about me page
 
 - added a sixth question to the quiz
 - added - seventh question to the quiz
+
+#Update on 3/28/2019
+-pair programming was completed. Driver was Kush Shretha and navigator was Tisha Greenidge.
