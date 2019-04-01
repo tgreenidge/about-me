@@ -79,13 +79,14 @@ var guessWhereILived = function(userName) {
   var numCorrect = 0;
 
   while (numGuessesRemaining > 0 ) {
+    console.log(userGuessForPlace);
     if (placesLivedNames.includes(userGuessForPlace) || placesLived2Chars.includes(userGuessForPlace)){
       alert (getCorrectOrIncorrectMessage(true));
       numCorrect += 1;
       break;
     } else {
       alert(getCorrectOrIncorrectMessage(false));
-      userGuessForPlace = prompt(lastQuestion).toUpperCase().trim;
+      userGuessForPlace = prompt(lastQuestion).toUpperCase().trim();
     }
     numGuessesRemaining -= 1;
   }
