@@ -8,7 +8,7 @@ var updateScore = function(numCorrect, numQuestions){
 //displays updated final score
 var updateFinalScore = function(numCorrect, numQuestions, name){
   console.log('updating final score...');
-  var scoreInfo = '<span><strong ></strong></span>' + numCorrect + ' / ' + numQuestions + ' Correct, ';
+  var scoreInfo = '<span><strong ></strong></span>' + numCorrect + ' / ' + numQuestions + ' correct, ';
 
   if (numCorrect === numQuestions) {
     document.getElementById('num-correct').innerHTML = ('You got ' + scoreInfo + name + '. You seem to know me very well!');
@@ -22,8 +22,18 @@ var getARandomNumber = function(num) {
   return Math.floor(Math.random() * num) + 1;
 };
 
+
+//Generic responses for correct/incorrect
+var getCorrectOrIncorrectMessage = function(isCorrect){
+  if (isCorrect){
+    return 'Yes, you are correct! ';
+  } else {
+    return 'Sorry, that is not the correct response. ';
+  }
+};
+
 //function for guess a number game. returns number of correct answers from guessANumberGame.
-var guessANumberGame = function(userName, numCorrect, questionsAnswered, guessANumberAnswers, guessANumberExplanations, guessANumberQuestions){
+var guessANumberGame = function(userName, questionsAnswered, guessANumberAnswers, guessANumberExplanations, guessANumberQuestions){
 
   //TODO refactor below a function for guessing game and include in a form
   var userGuess = prompt('Hello ' + userName + '. You have 3 guesses. ' + guessANumberQuestions[0]);
@@ -33,6 +43,7 @@ var guessANumberGame = function(userName, numCorrect, questionsAnswered, guessAN
   }
 
   var numGuessesRemaining = 3;
+  var numCorrect = 0;
 
   while (numGuessesRemaining > 0 ) {
     var answer = guessANumberAnswers[0];
@@ -50,8 +61,41 @@ var guessANumberGame = function(userName, numCorrect, questionsAnswered, guessAN
   }
   alert(guessANumberExplanations[0] + answer);
   //check to see if updates properly
-  console.log(questionsAnswered);
+  //console.log(questionsAnswered);
   questionsAnswered += 1;
+  return [numCorrect, questionsAnswered];
+};
+
+//Places I lived game
+var guessWhereILived = function(userName) {
+  //TODO refactor below to include on form
+  var placesLivedNames = ['MISSISSIPPI', 'RHODE ISLAND','TEXAS'];
+  var placesLived2Chars = ['MI', 'RI', 'TX'];
+  var lastQuestion = 'Hello ' + userName + '. You have 6 guesses. ' + 'Can you guess a state that I lived in other than New York and Washington?';
+  var userGuessForPlace = prompt(lastQuestion);
+  userGuessForPlace = userGuessForPlace.toUpperCase().trim();
+
+  var numGuessesRemaining = 5;
+  var numCorrect = 0;
+
+  while (numGuessesRemaining > 0 ) {
+    if (placesLivedNames.includes(userGuessForPlace) || placesLived2Chars.includes(userGuessForPlace)){
+      alert (getCorrectOrIncorrectMessage(true));
+      numCorrect += 1;
+      break;
+    } else {
+      alert(getCorrectOrIncorrectMessage(false));
+      userGuessForPlace = prompt(lastQuestion).toUpperCase().trim;
+    }
+    numGuessesRemaining -= 1;
+  }
+
+  if (numGuessesRemaining === 0) {
+    alert('You are out of guesses!');
+  }
+  alert('Other states that I lived are ' + placesLivedNames.join(', ') +'.');
+
+  var questionsAnswered = 1;
   return [numCorrect, questionsAnswered];
 };
 
@@ -99,10 +143,6 @@ var startQuiz = function(event){
     var guessANumberQuestions = ['I am thinking of a number between 1 and 10, can you guess what it is?'];
     var guessANumberAnswers = [getARandomNumber(10)];
     var guessANumberExplanations = ['The number that I was thinking about was '];
-
-    //Generic responses for correct/incorrect
-    var correctResponseMessage = 'Yes, you are correct! ';
-    var incorrectResponseMessage = 'Sorry, that is not the correct response. ';
 
     //Icons to mark questions as correct or incorrect
     var correctResponseIcon = '<span><i class="far fa-check-circle"></i></span>';
@@ -153,7 +193,7 @@ var startQuiz = function(event){
               console.log('Correct response entered for question ' + (questionNumber + 1));
 
               //display message for notifiction of correct response
-              questionDivs[questionNumber].innerHTML += '    ' + correctResponseIcon + '<span class="correct">' + correctResponseMessage + yesAndNoExplanations[questionNumber] + '</span>';
+              questionDivs[questionNumber].innerHTML += '    ' + correctResponseIcon + '<span class="correct">' + getCorrectOrIncorrectMessage(true) + yesAndNoExplanations[questionNumber] + '</span>';
 
               //update current score and append to DOM
               numCorrect += 1;
@@ -162,10 +202,10 @@ var startQuiz = function(event){
             } else {
               console.log('j = ' + j);
               console.log('incorrect response entered');
-              console.log(incorrectResponseMessage + yesAndNoExplanations[questionNumber]);
+              console.log(getCorrectOrIncorrectMessage(false) + yesAndNoExplanations[questionNumber]);
 
               //display message for notification of incorrect response
-              questionDivs[questionNumber].innerHTML += '    ' + incorrectResponseIcon + '<span class="incorrect">' + incorrectResponseMessage + yesAndNoExplanations[questionNumber] + '</span>';
+              questionDivs[questionNumber].innerHTML += '    ' + incorrectResponseIcon + '<span class="incorrect">' + getCorrectOrIncorrectMessage(false) + yesAndNoExplanations[questionNumber] + '</span>';
             }
             questionsAnswered += 1;
 
@@ -184,33 +224,19 @@ var startQuiz = function(event){
     }
     
     //play guess a number game and get number of correct answer and number of questions answered.
-    var guessANumResults =  guessANumberGame(userName, numCorrect, questionsAnswered, guessANumberAnswers, guessANumberExplanations, guessANumberQuestions);
-    console.log(guessANumResults);
+    var guessANumResults =  guessANumberGame(userName, questionsAnswered, guessANumberAnswers, guessANumberExplanations, guessANumberQuestions);
+    //console.log(guessANumResults);
     numCorrect += guessANumResults[0];
     questionsAnswered += guessANumResults[1];
     console.log(questionsAnswered);
-    
-    //TODO refactor below to include on form
-    var placesLivedNames = ['MISSISSIPPI', 'RHODE ISLAND','TEXAS'];
-    var placesLived2Chars = ['MI', 'RI', 'TX'];
-    var lastQuestion = 'Hello ' + userName + '. You have 6 guesses. ' + 'Can you guess a state that I lived in other than New York and Washington?';
-    var userGuessForPlace = prompt(lastQuestion).toUpperCase().trim();
+    updateScore(numCorrect, yesAndNoQuestions.length + guessANumberQuestions.length + 1);
 
-    var numGuessesRemaining = 5;
-
-    while (numGuessesRemaining > 0 ) {
-      if (placesLivedNames.includes(userGuessForPlace) || placesLived2Chars.includes(userGuessForPlace)){
-        alert (correctResponseMessage);
-        numCorrect += 1;
-        break;
-      } else {
-        userGuessForPlace = prompt(lastQuestion).toUpperCase().trim;
-      }
-      numGuessesRemaining -= 1;
-    }
-    alert('Other states that I lived are ' + placesLivedNames.join(', ') +'.');
-    updateScore(numCorrect, + yesAndNoQuestions.length + guessANumberQuestions.length + 1);
-    questionsAnswered += 1;
+    var placesLivedResults =  guessWhereILived(userName);
+    //console.log(placesLivedResults);
+    numCorrect += placesLivedResults[0];
+    questionsAnswered += placesLivedResults[1];
+    console.log(questionsAnswered);
+    updateScore(numCorrect, yesAndNoQuestions.length + guessANumberQuestions.length + 1);
   }
 };
 
